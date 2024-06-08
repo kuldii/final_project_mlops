@@ -1,5 +1,6 @@
 awscli
 dvc
+dvc-s3
 streamlit
 joblib
 nltk
