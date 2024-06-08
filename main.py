@@ -37,8 +37,7 @@ def main():
     # Add a text input field for user input
     user_input = st.text_input("Enter text:")
 
-    # X_test = preprocess_text(user_input)
-    X_test = user_input
+    X_test = preprocess_text(user_input)
 
     # Add a button to trigger predictions
     if st.button("Predict"):
