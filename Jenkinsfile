@@ -37,8 +37,9 @@ pipeline {
                     // Use the virtual environment to run DVC
                     sh """
                     source ${VENV}/bin/activate
-                    aws configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
-                    aws configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
+                    AWS_CLI_PATH=\$(which aws)
+                    \$AWS_CLI_PATH configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
+                    \$AWS_CLI_PATH configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
                     dvc pull
                     """
                 }
