@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        // Define the virtual environment directory
-        VENV = 'venv'
+        // Define all credentials 
         AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
         AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
     }
@@ -19,13 +18,9 @@ pipeline {
         stage('Setup Python Environment') {
             steps {
                 script {
-                    // Create a virtual environment and install dependencies
+                    // Install dependencies
                     sh """
-                    python3 -m venv ${VENV}
-                    source ${VENV}/bin/activate
-                    pip install --upgrade pip
                     pip install -r requirements.txt
-                    pip install awscli dvc dvc-s3
                     """
                 }
             }
@@ -34,12 +29,10 @@ pipeline {
         stage('Pull Dataset') {
             steps {
                 script {
-                    // Use the virtual environment to run DVC
+                    // pull data with DVC from AWS S3
                     sh """
-                    source ${VENV}/bin/activate
-                    AWS_CLI_PATH=\$(which aws)
-                    \$AWS_CLI_PATH configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
-                    \$AWS_CLI_PATH configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
+                    aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+                    aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
                     dvc pull
                     """
                 }
@@ -49,9 +42,8 @@ pipeline {
         stage('Data Quality Testing') {
             steps {
                 script {
-                    // Run data quality tests within the virtual environment
+                    // Run data quality tests
                     sh """
-                    source ${VENV}/bin/activate
                     python data_quality_tests.py
                     """
                 }
@@ -61,26 +53,12 @@ pipeline {
         stage('Run Application') {
             steps {
                 script {
-                    // Run the Streamlit application within the virtual environment
+                    // Run the Streamlit application
                     sh """
-                    source ${VENV}/bin/activate
                     streamlit run main.py
                     """
                 }
             }
-        }
-    }
-    
-    post {
-        always {
-            // Clean up the virtual environment after the pipeline finishes
-            sh "rm -rf ${VENV}"
-        }
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
