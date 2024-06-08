@@ -6,7 +6,6 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.metrics import classification_report
-from sklearn.feature_extraction.text import TfidfVectorizer
 
 stop_words = set(stopwords.words('english'))
 lemmatizer = WordNetLemmatizer()
@@ -37,16 +36,14 @@ df['cleaned'] = df['content'].apply(preprocess_text)
 df = df[df['cleaned'] != ""]
 df.drop_duplicates(inplace=True)
 
-tfidfVectorizer = TfidfVectorizer()
-
-X_test = tfidfVectorizer.fit_transform(df['cleaned'])
+X_test = df['cleaned']
 y_test = df['sentiment']
 
 # Load the model from the file
 model = joblib.load('model/random_forest_model.pkl')
 
 # Validation Model
-y_pred = model.predict(df['cleaned'])
+y_pred = model.predict(X_test)
 
 # Evaluate Model
 print(classification_report(y_test, y_pred,
