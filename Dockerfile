@@ -9,4 +9,6 @@ RUN python -m nltk.downloader punkt
 RUN python -m nltk.downloader wordnet
 RUN python -m nltk.downloader stopwords
 
+EXPOSE 8501
+
 CMD ["streamlit", "run", "main.py"]
