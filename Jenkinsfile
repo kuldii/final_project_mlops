@@ -4,6 +4,8 @@ pipeline {
     environment {
         // Define the virtual environment directory
         VENV = 'venv'
+        AWS_ACCESS_KEY_ID = credentials('aws_access_key_id')
+        AWS_SECRET_ACCESS_KEY = credentials('aws_secret_access_key')
     }
 
     stages {
@@ -27,7 +29,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Pull Dataset') {
             steps {
                 script {
