@@ -25,19 +25,20 @@ pipeline {
                     source ${VENV}/bin/activate
                     pip install --upgrade pip
                     pip install -r requirements.txt
+                    pip install awscli dvc dvc-s3
                     """
                 }
             }
         }
-
+        
         stage('Pull Dataset') {
             steps {
                 script {
                     // Use the virtual environment to run DVC
                     sh """
                     source ${VENV}/bin/activate
-                    aws configure set aws_access_key_id ${AWS_ACCESS_KEY_ID}
-                    aws configure set aws_secret_access_key ${AWS_SECRET_ACCESS_KEY}
+                    aws configure set aws_access_key_id "${AWS_ACCESS_KEY_ID}"
+                    aws configure set aws_secret_access_key "${AWS_SECRET_ACCESS_KEY}"
                     dvc pull
                     """
                 }
