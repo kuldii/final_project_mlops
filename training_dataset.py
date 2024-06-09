@@ -21,9 +21,9 @@ pipeline = make_pipeline(
 
 # Define the parameter grid
 param_grid = {
-    'randomforestclassifier__n_estimators': [100, 200, 300],
+    'randomforestclassifier__n_estimators': [100, 200, 300, 500],
     'randomforestclassifier__max_features': ['sqrt', 'log2'],
-    'randomforestclassifier__max_depth': [10, 20, 30],
+    'randomforestclassifier__max_depth': [10, 20, 30, 50],
 }
 
 # Set up the GridSearchCV
