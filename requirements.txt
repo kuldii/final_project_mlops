@@ -1,6 +1,7 @@
 awscli
 dvc
 dvc-s3
+scikit-learn
 streamlit
 joblib
 nltk
