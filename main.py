@@ -37,15 +37,14 @@ def main():
     # Add a text input field for user input
     user_input = st.text_input("Enter text:")
 
-    X_test = preprocess_text(user_input)
-
     # Add a button to trigger predictions
     if st.button("Predict"):
         # Perform prediction using the loaded model
-        prediction = model.predict([X_test])
+        prediction = model.predict([user_input])
 
         # Display the prediction result
-        st.write("Prediction:", prediction[0])
+        st.header("\nResult :")
+        st.write(f"Prediction: {prediction[0]}")
 
 
 # Run the app
