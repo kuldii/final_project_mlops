@@ -26,7 +26,7 @@ def preprocess_text(text):
 
 
 # Load the model from the joblib file
-model = joblib.load('/app/model/random_forest_model.pkl')
+model = joblib.load('model/random_forest_model.pkl')
 
 
 # Define the Streamlit app
