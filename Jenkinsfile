@@ -30,9 +30,8 @@ pipeline {
             steps {
                 script {
                     // pull data with DVC from AWS S3
-                    sh """
-                    aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
-                    aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+                    sh('aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID')
+                    sh('aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY')
                     dvc pull
                     """
                 }
