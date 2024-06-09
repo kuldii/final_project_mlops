@@ -50,13 +50,20 @@ pipeline {
             }
         }
         
-        stage('Run Application') {
+        stage('Build Docker Image') {
             steps {
                 script {
-                    // Run the Streamlit application
-                    sh """
-                    streamlit run main.py
-                    """
+                    // Build Docker image
+                    docker.build('final-project-mlops')
+                }
+            }
+        }
+
+        stage('Run Application in Docker') {
+            steps {
+                script {
+                    // Run the Streamlit application in Docker
+                    docker.image('final-project-mlops').run('-p 8501:8501')
                 }
             }
         }
