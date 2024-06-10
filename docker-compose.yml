@@ -1,0 +1,6 @@
+version: "1"
+services:
+  sentiment-analysis:
+    build: .
+    ports:
+      - "8501:8501"
