@@ -21,6 +21,7 @@ pipeline {
                     // Install dependencies
                     sh """
                     pip install -r requirements.txt
+                    pip install pytest
                     """
                 }
             }
@@ -42,7 +43,7 @@ pipeline {
                 script {
                     // Run data quality tests
                     sh """
-                    python data_quality_tests.py
+                    pytest data_quality_tests.py
                     """
                 }
             }
