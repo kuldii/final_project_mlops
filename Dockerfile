@@ -11,6 +11,7 @@ RUN python -m pip install scikit-learn==1.2.2
 RUN python -m pip install streamlit
 RUN python -m pip install joblib==1.2.0
 RUN python -m pip install nltk
+RUN python -m pip install plotly
 
 RUN python -m nltk.downloader punkt
 RUN python -m nltk.downloader wordnet
